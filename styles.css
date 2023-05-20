@@ -1,0 +1,175 @@
+* {
+  margin: 0; /*espaçamento externo*/
+  padding: 0; /*espaçamento interno*/
+  box-sizing: border-box; /*respeitar os tamanhos da caixas que eu definir*/
+}
+
+:root {
+  font-size: 16px;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  /*regiao por onde a barra vai percorrer*/
+  background-color: #2c2c31;
+}
+
+::-webkit-scrollbar-thumb {
+  /*cor da barra que rola*/
+  background-color: #9e9ea0;
+}
+
+@keyframes entering {
+  from {
+    opacity: 0;
+    transform: translateY(-200px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+body {
+  background-color: #121215;
+  color: #eaeaea;
+  font-family: "Roboto", sans-serif;
+
+  display: grid; /*grade*/
+  grid-template-areas: "profile timeline"; /*duas colunas*/
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 100vh;
+}
+
+nav {
+  padding: 64px;
+  grid-area: timeline;
+
+  overflow-y: scroll; /*só esse lado que da o scrool*/
+  animation: entering 0.7s ease-in-out;
+}
+
+.memory {
+  display: flex; /*ferramenta para flexibilizar e organizar os elementos*/
+  flex-direction: column;
+  gap: 16px;
+
+  text-decoration: none;
+  margin-bottom: 64px;
+}
+
+.memory small {
+  color: #bebebf;
+  font-size: 0.75rem; /*faz referencia a fonta do root lá de cima*/
+}
+
+.memory h1 {
+  font-size: 2rem;
+  color: #eaeaea;
+}
+
+.memory img {
+  width: 100%; /*acompanha a largura da página*/
+  height: 280px;
+  object-fit: cover; /*para a imagem não esticar quando aumenta a pagina*/
+  border-radius: 8px; /*arredondamento da imagem*/
+
+  transition: transform 0.3s ease-in-out; /*aplicar uma transição no transform lá da img pra tornar
+                                          a transição mais suave*/
+}
+
+.memory div {
+  /*separou por div lá no html justamente para aplicar o hover efeito só na foto*/
+  width: 100%; /*acompanha a largura da página*/
+  height: 280px;
+  overflow: hidden; /* como estamos usando o método de aumentar a foto, quando
+                    ela aumenta acaba saindo da tela. Então usa isso para que
+                    quando sair, ele esconder o que saiu*/
+  border-radius: 8px;
+}
+
+.memory:hover img {
+  /*quando passar o mouse em cima*/
+  transform: scale(1.1); /*quando passar o mouse em cima aumenta a foto*/
+}
+
+.memory p {
+  font-size: 1.2rem;
+  color: #bebebf;
+  line-height: 28px;
+}
+
+aside {
+  grid-area: profile;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+
+  border-right: 1px solid;
+  border-image: linear-gradient(#727275, #2c2c31) 1;
+
+  background-image: url("./assets/background.svg");
+  background-position: top right; /*deixar o fundo até a borda*/
+  background-repeat: no-repeat; /*pra no lado esquerdo não repetir a imagem quando ela acabar*/
+  background-size: auto 100%;
+}
+
+aside * {
+  /*seleciona só os elementos do aside, tirando o plano de fundo e a linha do lado*/
+  animation: entering 0.7s ease-in-out;
+}
+
+aside img:nth-child(2) {
+  object-fit: cover;
+  object-position: top;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%; /*deixa redondo*/
+
+  border: 4px solid transparent;
+  background: linear-gradient(#d39e33, #ed5636, #633bbc) padding-box,
+    linear-gradient(260deg, #d39e33, #ed5636, #633bbc) border-box;
+}
+
+aside p {
+  font-size: 2rem;
+  text-align: center; /*centralizar texto*/
+}
+
+aside span {
+  font-size: 0.75rem;
+  color: #9e9ea0;
+}
+
+@media (max-width: 768px) {
+  /*para telas pequenas de até esse pix, coloca um embaixo do outro*/
+  :root {
+    font-size: 14px; /*como a gente colou como padrão no root, entao quando a tela for pequena
+                      vai alterar em toda a página*/
+  }
+
+  body {
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.2fr 0.8fr;
+    grid-template-areas:
+      "profile"
+      "timeline";
+  }
+
+  aside {
+    border-right: none;
+    padding: 32px /*em cima*/ 12px /*do lado*/;
+  }
+
+  nav {
+    /*conseguir dar scrool na tela toda, não só na nav*/
+    overflow-y: visible;
+    padding: 22px;
+  }
+}
